@@ -11,18 +11,24 @@
 #include <time.h> //I was tempted to do everything without this, just for fun, but coursework deadlines...
 
 
-bool enoughArguments(int num);
-bool valiDate(char **argv);
+bool enoughArgs(int num);
+bool argLengths(char **argv);
+bool argInts(char **argv);
+
 time_t parseInput(char **argv);
 char *timeDiffStr(time_t from , time_t until);
 
 int main ( int argc , char **argv ) {
-    if (!enoughArguments(argc)) {
+    if (!enoughArgs(argc)) {
         printf("Incorrect number of arguments, YYYY MM DD required.\n Program will now terminate.\n");
         exit(EXIT_FAILURE);
     };
-    if (!valiDate(argv)) {
+    if (!argLengths(argv)) {
         printf("Arguments must be of the form YYYY MM DD.\n Program will now terminate.\n");
+        exit(EXIT_FAILURE);
+    };
+    if (!argInts(argv)) {
+        printf("Arguments must be Integers.\n Program will now terminate.\n");
         exit(EXIT_FAILURE);
     };
     printf("%s\n",timeDiffStr(time(NULL), parseInput(argv)));
@@ -31,23 +37,26 @@ int main ( int argc , char **argv ) {
 
 
 //test for 3 parameters 
-bool enoughArguments(int num) {
+bool enoughArgs(int num) {
     if (num == 4) return true;
-    else           return false;   
+    else          return false;   
 }
 
 //check that the 3 arguments are xxxx xx xx
-bool valiDate(char **argv) {
+bool argLengths(char **argv) {
     bool valid = true; //innocent until proven guilty, right?
     if(strlen(argv[1]) != 4) valid = false;
+    if(strlen(argv[2]) != 2) valid = false;
+    if(strlen(argv[3]) != 2) valid = false;
+    return valid;
+}
+    //check that the 3 arguments are xxxx xx xx
+bool argInts(char **argv) {
+    bool valid = true; //innocent until proven guilty, right?
     for ( int i = 0 ; i < 4 ; i++ )
        if (!isdigit(argv[1][i])) valid = false;
-
-    if(strlen(argv[2]) > 2) valid = false;
     for ( int i = 0 ; i < 2 ; i++ )
        if (!isdigit(argv[2][i])) valid = false;
-    
-    if(strlen(argv[3]) > 2) valid = false;
     for ( int i = 0 ; i < 2 ; i++ )
        if (!isdigit(argv[3][i])) valid = false;
     return valid;
