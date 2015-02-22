@@ -67,7 +67,7 @@ bool argInts(char **argv) {
 
 //convert argv into calendar and then into time.
 time_t parseInput(char **argv){
-    struct tm input;
+    struct tm input = {0,0,0,0,0,0,0,0,0,0};
     input.tm_year = atoi(argv[1])-1900;
     input.tm_mon  = atoi(argv[2])-1;
     input.tm_mday = atoi(argv[3]);
