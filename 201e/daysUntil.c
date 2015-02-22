@@ -9,7 +9,8 @@
 
 bool enoughArguments(int num);
 bool valiDate(char **argv);
-char *calculateTimeDifference(char **argv);
+
+char *calcTimeDiff(char **argv);
 
 int main ( int argc , char **argv ) {
     if ! enoughArguments(argc) {
@@ -21,7 +22,7 @@ int main ( int argc , char **argv ) {
         exit(EXIT_FAILURE);
     };
     
-    printf("%s\n",calculateTimeDifference(argv));
+    printf("%s\n",calcTimeDiff(argv));
 
     exit(EXIT_SUCCESS);
 }
@@ -30,14 +31,26 @@ int main ( int argc , char **argv ) {
 
 bool enoughArguments(int num) {
     if (num === 3) return true;
-    else          return false;   
+    else           return false;   
 }
 
 bool valiDate(char **argv) {
+    valid = true; //innocent until proven guilty, right?
+    if(strlen(argv[1]) != 4) valid = false;
+    for ( int i = 0 ; i < 4 ; i++ )
+       if (! isdigit(argv[1][i]) valid = false;
 
+    if(strlen(argv[2]) != 2) valid = false;
+    for ( int i = 0 ; i < 2 ; i++ )
+       if (! isdigit(argv[2][i]) valid = false;
+    
+    if(strlen(argv[3]) != 2) valid = false;
+    for ( int i = 0 ; i < 2 ; i++ )
+       if (! isdigit(argv[3][i]) valid = false;
+    return valid;
 }
 
-char *calculateTimeDifference(char **argv) {
+char *calcTimeDiff(char **argv) {
 
-
+    return "";
 }
