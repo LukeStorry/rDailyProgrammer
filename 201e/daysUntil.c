@@ -73,8 +73,14 @@ time_t parseInput(char **argv){
 
 //output a string comparing two times.
 char *timeDiffStr(time_t from , time_t until){
-    char *str = malloc(sizeof(char)*100);
-    snprintf(str,99,"There are %.1f days between %s and %s.",
+    char* fromStr = malloc(sizeof(char)*16);
+    strftime(fromStr,16,"%F %R", localtime(&from));
+    
+    char* untilStr = malloc(sizeof(char)*16);
+    strftime(untilStr,16,"%F %R", localtime(&until));
+
+    char *fullStr = malloc(sizeof(char)*100);
+    snprintf(fullStr,99,"There are %.1f days between %s and %s.",
             (float)(from-until), ctime(&from), ctime(&until));
-    return str;
+    return fulLStr;
 }
