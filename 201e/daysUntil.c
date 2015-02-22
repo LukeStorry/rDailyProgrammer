@@ -13,8 +13,8 @@
 
 bool enoughArguments(int num);
 bool valiDate(char **argv);
-
-char *calcTimeDiff(char **argv);
+time_t parseInput(char **argv);
+char *timeDiffStr(time_t from , time_t until);
 
 int main ( int argc , char **argv ) {
     if (!enoughArguments(argc)) {
@@ -25,19 +25,18 @@ int main ( int argc , char **argv ) {
         printf("Arguments must be of the form YYYY MM DD.\n Program will now terminate.\n");
         exit(EXIT_FAILURE);
     };
-    
-    printf("%s\n",calcTimeDiff(argv));
-
+    printf("%s\n",timeDiffStr(time(NULL), parseInput(argv)));
     exit(EXIT_SUCCESS);
 }
 
 
-
+//test for 3 args
 bool enoughArguments(int num) {
     if (num == 3) return true;
     else           return false;   
 }
 
+//check that the 3 arguments are xxxx xx xx
 bool valiDate(char **argv) {
     bool valid = true; //innocent until proven guilty, right?
     if(strlen(argv[1]) != 4) valid = false;
@@ -54,7 +53,16 @@ bool valiDate(char **argv) {
     return valid;
 }
 
-char *calcTimeDiff(char **argv) {
+//convert argv into calendar and then into time.
+time_t parseInput(char **argv){
+    struct tm input = *localtime(&time(NULL)); //so only days are counted
+    input.tm_year = atoi(argv[1])-1900;
+    input.tm_mon  = atoi(argv[2])-1;
+    input.tm_mday = atoi(argv[3]);
+    return mktime(&input);
+}
 
+//output a string comparing two times.
+char *timeDiffStr(time_t from , time_t until){
     return "";
 }
