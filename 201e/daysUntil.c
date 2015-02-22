@@ -31,7 +31,10 @@ int main ( int argc , char **argv ) {
         printf("Arguments must be Integers.\n Program will now terminate.\n");
         exit(EXIT_FAILURE);
     };
-    printf("%s\n",timeDiffStr(time(NULL), parseInput(argv)));
+    //printf("%s\n",timeDiffStr(time(NULL), time(NULL)));
+    time_t testtime = parseInput(argv);
+    printf("%s",ctime(&testtime));
+    //printf("%s\n",timeDiffStr(time(NULL), parseInput(argv)));
     exit(EXIT_SUCCESS);
 }
 
@@ -64,19 +67,16 @@ bool argInts(char **argv) {
 
 //convert argv into calendar and then into time.
 time_t parseInput(char **argv){
-    printf("1");
     struct tm input;
     input.tm_year = atoi(argv[1])-1900;
     input.tm_mon  = atoi(argv[2])-1;
     input.tm_mday = atoi(argv[3]);
-    printf("2");
     return mktime(&input);
 }
 
 //output a string comparing two times.
 char *timeDiffStr(time_t from , time_t until){
-    printf("3");
-    char * buffPtr;
-    sprintf(buffPtr,"There are %.1f days between %s and %s.", (from-until), ctime(&from), ctime(&until));
+    char * buffPtr = "";
+    sprintf(buffPtr,"There are %.1f days between %s and %s.", (float)(from-until), ctime(&from), ctime(&until));
     return buffPtr;
 }
