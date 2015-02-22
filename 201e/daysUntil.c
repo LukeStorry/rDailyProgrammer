@@ -64,5 +64,7 @@ time_t parseInput(char **argv){
 
 //output a string comparing two times.
 char *timeDiffStr(time_t from , time_t until){
-    return "";
+    char * buffPtr;
+    sprintf(buffPtr,"There are %.1f days between %s and %s.", (from-until), ctime(&from), ctime(&until));
+    return buffPtr;
 }
