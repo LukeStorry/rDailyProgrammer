@@ -18,7 +18,7 @@ char *timeDiffStr(time_t from , time_t until);
 
 int main ( int argc , char **argv ) {
     if (!enoughArguments(argc)) {
-        printf("Not enough arguments, YYYY MM DD required.\n Program will now terminate.\n");
+        printf("Incorrect number of arguments, YYYY MM DD required.\n Program will now terminate.\n");
         exit(EXIT_FAILURE);
     };
     if (!valiDate(argv)) {
@@ -30,9 +30,9 @@ int main ( int argc , char **argv ) {
 }
 
 
-//test for 3 args
+//test for 3 parameters 
 bool enoughArguments(int num) {
-    if (num == 3) return true;
+    if (num == 4) return true;
     else           return false;   
 }
 
@@ -43,11 +43,11 @@ bool valiDate(char **argv) {
     for ( int i = 0 ; i < 4 ; i++ )
        if (!isdigit(argv[1][i])) valid = false;
 
-    if(strlen(argv[2]) != 2) valid = false;
+    if(strlen(argv[2]) > 2) valid = false;
     for ( int i = 0 ; i < 2 ; i++ )
        if (!isdigit(argv[2][i])) valid = false;
     
-    if(strlen(argv[3]) != 2) valid = false;
+    if(strlen(argv[3]) > 2) valid = false;
     for ( int i = 0 ; i < 2 ; i++ )
        if (!isdigit(argv[3][i])) valid = false;
     return valid;
