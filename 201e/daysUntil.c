@@ -31,8 +31,7 @@ int main ( int argc , char **argv ) {
         printf("Arguments must be Integers.\n Program will now terminate.\n");
         exit(EXIT_FAILURE);
     };
-    printf("%s\n",timeDiffStr(time(NULL), time(NULL)));
-    //printf("%s\n",timeDiffStr(time(NULL), parseInput(argv)));
+    printf("%s\n",timeDiffStr(time(NULL), parseInput(argv)));
     exit(EXIT_SUCCESS);
 }
 
@@ -74,7 +73,7 @@ time_t parseInput(char **argv){
 
 //output a string comparing two times.
 char *timeDiffStr(time_t from , time_t until){
-    char str[100] = { };
+    char *str = malloc(sizeof(char)*100);
     snprintf(str,99,"There are %.1f days between %s and %s.",
             (float)(from-until), ctime(&from), ctime(&until));
     return str;
