@@ -7,12 +7,16 @@
 #include <stdio.h>
 #include <time.h> //I was tempted to do everything without this, just for fun, but coursework deadlines...
 
+bool enoughArguments(int num);
+bool valiDate(char **argv);
+char *calculateTimeDifference(char **argv);
+
 int main ( int argc , char **argv ) {
     if ! enoughArguments(argc) {
         printf("Not enough arguments, YYYY MM DD required.\n Program will now terminate.\n");
         exit(EXIT_FAILURE);
     };
-    if ! validateDate(argv) {
+    if ! valiDate(argv) {
         printf("Arguments must be of the form YYYY MM DD.\n Program will now terminate.\n");
         exit(EXIT_FAILURE);
     };
@@ -24,3 +28,16 @@ int main ( int argc , char **argv ) {
 
 
 
+bool enoughArguments(int num) {
+    if (num === 3) return true;
+    else          return false;   
+}
+
+bool valiDate(char **argv) {
+
+}
+
+char *calculateTimeDifference(char **argv) {
+
+
+}
