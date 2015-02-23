@@ -1,13 +1,10 @@
-
+import Data.List
 
 main = interact $ findString . lines
 
 findString::[String]->String
-findString (firstline:rest)
-    = let (w,h) = parseInts firstline
-
+findString strLines
+    = let 
+        (w,_,h)     = head strLines
+        (x,_,y,_,c) = last strLines
       in "" 
-
-parseInts::String->[Int]
-parseInts "" = []
-parseInts s = map (read . words) s
