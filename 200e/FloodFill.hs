@@ -30,7 +30,10 @@ fill (w,h) (x,y,c,d) array
 
     |otherwise  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) array
 
-replaceChar::Int->Int->Char->[[Char]]->[[Char]]
-replaceChar 0 0 c [[h:s]:xs] = [[" "]] --[[c]++s]++xs
-replaceChar a b c ar =[[" "]]
+
+replaceChar::Int->Int->Char->[String]->[String]
+replaceChar 0 0 c ((_:right):down) = ((c:right):down)
+replaceChar x 0 c ((left:right):down) = (left: --the problem is this re-connection. might have to combine [string] into string
+                                            (replaceChar x-1  0 c (right)):down
+replaceChar x y c (up:down) = up:(replaceChar x  y-1 c down)
 
