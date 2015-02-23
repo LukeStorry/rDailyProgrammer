@@ -30,7 +30,7 @@ fill (w,h) (x,y,c,d) array
 
     |otherwise  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) array
 
-replaceChar::Int->Int->Char->[[Char]]
+replaceChar::Int->Int->Char->[[Char]]->[[Char]]
 replaceChar 0 0 c [[h:s]:xs] = [[c]++s]++xs
 replaceChar a b c ar =[[" "]]
 
