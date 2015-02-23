@@ -1,4 +1,5 @@
-import Data.List
+
+import Data.List (lines, unlines)
 
 main::IO()
 main = interact $ unlines . main' . lines
@@ -7,15 +8,27 @@ main = interact $ unlines . main' . lines
 main'::[String]->[String]        
 main' input 
     = let 
-        [w,h]   = map read $ words $ head input  ::[Int]
-        [x,y,_] = map read $ words $ last input  ::[Int]
-        c       = last $ last input              :: Char
-        array   = tail $ init input              ::[[Char]]
-    in fill (w,h) (x,y,c) array
+        [w,h]   = map read $ words $ head input ::[Int]
+        [x,y,_] = map read $ words $ last input ::[Int]
+        array   = tail $ init input             ::[[Char]]
+        c       = last $ last input             ::Char
+        d       = (array !! y) !! x             ::Char
+    in fill (w,h) (x,y,c,d) array
 
+--maybe add validation checks here later...
 
+fill::(Int,Int)->(Int,Int,Char,Char)->[[Char]]->[[Char]]
+fill (w,h) (x,y,c,d) array
+    --fill
+    |
+    --check if done
+    | (array !! y) !! x == c    = array
+    | (array !! y) !! x != d    = array
+    --check for edges
+    | x == w-1  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) array
+    | x == 0    = fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) array
+    | y == h-1  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) array
+    | y == 0    = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y+1,c,d) array
 
-fill::(Int,Int)->(Int,Int,Char)->[[Char]]->[[Char]]
-fill (w,h) (x,y,c) array
-    = [['0']]
+    |otherwise  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) array
 
