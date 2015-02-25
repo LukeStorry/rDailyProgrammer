@@ -33,7 +33,7 @@ fill (w,h) (x,y,c,d) array
 
 replaceChar::Int->Int->Char->[String]->[String]
 replaceChar 0 0 c ((_:right):down) = ((c:right):down)
-replaceChar x 0 c ((left:right):down) = (left: --the problem is this re-connection. might have to combine [string] into string
-                                            (replaceChar x-1  0 c (right)):down
-replaceChar x y c (up:down) = up:(replaceChar x  y-1 c down)
+replaceChar x 0 c ((left:right):down) = let (newRight:newDown) = (replaceChar (x-1) 0 c (right:down))
+                                        in ((left:newRight):newDown)
+replaceChar x y c (up:down) = up:(replaceChar x  (y-1) c down)
 
