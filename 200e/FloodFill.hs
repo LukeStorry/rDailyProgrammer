@@ -12,26 +12,26 @@ main' input
     = let 
         [w,h]   = map read $ words $ head input ::[Int]
         [x,y,_] = map read $ words $ last input ::[Int]
-        array   = tail $ init input             ::[[Char]]
+        image   = tail $ init input             ::[[Char]]
         c       = last $ last input             ::Char
-        d       = (array !! y) !! x             ::Char
-    in fill (w,h) (x,y,c,d) array
+        d       = (image !! y) !! x             ::Char
+    in fill (w,h) (x,y,c,d) image
 
 --maybe add validation checks here later...
 
 fill::(Int,Int)->(Int,Int,Char,Char)->[[Char]]->[[Char]]
-fill (w,h) (x,y,c,d) array
-    --fill if still in pool
-    | (array !! y) !! x == d    = replaceChar x y c array
-    | (array !! y) !! x /= d    = array
+fill (w,h) (x,y,c,d) image
     --check for edges, move on
-    | x == w-1  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) array
-    | x == 0    = fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) array
-    | y == h-1  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) array
-    | y == 0    = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y+1,c,d) array
+    | x == w-1  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) new
+    | x == 0    = fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) new
+    | y == h-1  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) new
+    | y == 0    = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y+1,c,d) new
 
-    |otherwise  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) array
+    |otherwise  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) new
 
+    where new = if (image !! y) !! x == d
+                    then (replaceChar x y c image)
+                    else image
 
 replaceChar::Int->Int->Char->[String]->[String]
 replaceChar 0 0 c ((_:right):down) = ((c:right):down)
