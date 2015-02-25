@@ -2,7 +2,9 @@
 import Data.List (lines, unlines)
 
 main::IO()
-main = interact $ unlines . main' . lines
+main = do
+    inputString <- getContents
+    putStr $ unlines . main' $ lines inputString
 
 
 main'::[String]->[String]        
