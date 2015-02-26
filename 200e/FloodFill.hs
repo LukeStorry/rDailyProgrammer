@@ -13,26 +13,31 @@ main' input
         [w,h]   = map read $ words $ head input ::[Int]
         [x,y,_] = map read $ words $ last input ::[Int]
         image   = tail $ init input             ::[[Char]]
-        c       = last $ last input             ::Char
-        d       = (image !! y) !! x             ::Char
-    in fill (w,h) (x,y,c,d) image
+        newChar       = last $ last input             ::Char
+        floodPlane       = (image !! y) !! x             ::Char
+    in fill (w,h) (x,y,newChar,floodPlane) image
 
 --maybe add validation checks here later...
 
 fill::(Int,Int)->(Int,Int,Char,Char)->[[Char]]->[[Char]]
-fill (w,h) (x,y,c,d) image
+fill (w,h) (x,y,newChar,floodPlane) image
+    | thisChar == newChar    = image
     --check for edges, then move on
-    | x == w-1  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) new
-    | x == 0    = fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) new
-    | y == h-1  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) new
-    | y == 0    = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y+1,c,d) new
+    | x == w-1  = up $ down $ left         newImage
+    | x == 0    = up $ down $        right newImage
+    | y == h-1  = up $        left $ right newImage 
+    | y == 0    =      down $ left $ right newImage
+    |otherwise  = up $ down $ left $ right newImage
 
-    |otherwise  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) new
-
-    where new = if (image !! y) !! x == d
-                    then (replaceChar x y c image)
-                    else image
-
+    where up    = fill (w,h) (x,y+2,newChar,floodPlane) 
+          down  = fill (w,h) (x,y+1,newChar,floodPlane)
+          left  = fill (w,h) (x-1,y,newChar,floodPlane)
+          right = fill (w,h) (x+1,y,newChar,floodPlane)
+          thisChar =  (image !! y) !! x 
+          newImage = if thisChar == floodPlane
+                        then (replaceChar x y newChar image)
+                        else image
+         
 replaceChar::Int->Int->Char->[String]->[String]
 replaceChar 0 0 c ((_:right):down) = ((c:right):down)
 replaceChar x 0 c ((left:right):down) = let (newRight:newDown) = (replaceChar (x-1) 0 c (right:down))
