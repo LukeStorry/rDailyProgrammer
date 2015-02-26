@@ -2,20 +2,18 @@
 import Data.List (lines, unlines)
 
 main::IO()
-main = do
-    inputString <- getContents
-    putStr $ unlines . main' $ lines inputString
+main = interact $ unlines . parser . lines 
 
 
-main'::[String]->[String]        
-main' input 
+parser::[String]->[String]        
+parser input 
     = let 
         [w,h]   = map read $ words $ head input ::[Int]
         [x,y,_] = map read $ words $ last input ::[Int]
         image   = tail $ init input             ::[[Char]]
         newChar       = last $ last input             ::Char
         floodPlane       = (image !! y) !! x             ::Char
-    in fill (w,h) (x,y,newChar,floodPlane) image
+    in fill (w-1,h-1) (x,y,newChar,floodPlane) image
 
 --maybe add validation checks here later...
 
@@ -29,7 +27,7 @@ fill (w,h) (x,y,newChar,floodPlane) image
     | y == 0    =      down $ left $ right newImage
     |otherwise  = up $ down $ left $ right newImage
 
-    where up    = fill (w,h) (x,y+2,newChar,floodPlane) 
+    where up    = fill (w,h) (x,y-1,newChar,floodPlane) 
           down  = fill (w,h) (x,y+1,newChar,floodPlane)
           left  = fill (w,h) (x-1,y,newChar,floodPlane)
           right = fill (w,h) (x+1,y,newChar,floodPlane)
