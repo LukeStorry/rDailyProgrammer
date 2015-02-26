@@ -21,7 +21,7 @@ main' input
 
 fill::(Int,Int)->(Int,Int,Char,Char)->[[Char]]->[[Char]]
 fill (w,h) (x,y,c,d) image
-    --check for edges, move on
+    --check for edges, then move on
     | x == w-1  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) new
     | x == 0    = fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) $ fill (w,h) (x,y+1,c,d) new
     | y == h-1  = fill (w,h) (x-1,y,c,d) $ fill (w,h) (x+1,y,c,d) $ fill (w,h) (x,y-1,c,d) new
