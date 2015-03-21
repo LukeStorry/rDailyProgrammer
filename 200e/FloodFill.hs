@@ -34,7 +34,7 @@ fill (w,h) (x,y,newChar,floodPlane) image
           thisChar =  (image !! y) !! x 
           newImage = if thisChar == floodPlane
                         then (replaceChar x y newChar image)
-                        else image
+                        else image --testing suggests error is here.
          
 replaceChar::Int->Int->Char->[String]->[String]
 replaceChar 0 0 c ((_:right):down) = ((c:right):down)
